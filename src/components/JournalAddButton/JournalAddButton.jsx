@@ -1,7 +1,14 @@
-// import React from 'react';
+import CardButton from '../CardButton/CardButton';
+import './journalAddButton.css';
 
-export default function JournalAddButton() {
+
+function JournalAddButton() {
+
 	return (
-		<div>JournalAddButton</div>
+		<CardButton className="journal-add">
+			Новое воспоминине
+		</CardButton>
 	);
 }
+
+export default JournalAddButton;
