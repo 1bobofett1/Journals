@@ -1,52 +1,52 @@
+import { useState } from 'react';
 import './App.css';
-import CardButton from './components/CardButton/CardButton';
+// import Button from './components/Button/Button';
 import Header from './components/Header/Header';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
-import JournalItem from './components/JournalItem/JournalItem';
+import JournalForm from './components/JournalForm/JournalForm';
 import JournalList from './components/JournalList/JournalList.jsx/JournalList';
 import Body from './layouts/Body/Body';
 import LeftPanel from './layouts/LeftPanel/LeftPanel';
 
+const INITIAL_DATA = [
+	// {
+	// 	id: 1,
+	// 	title: 'Подготовка к обновлению курсов',
+	// 	text:'Горные походы открывают удивительные природные ландшафт',
+	// 	date: new Date()
+	// },
+	// {
+	// 	id: 2,
+	// 	title: 'Реклама',
+	// 	text:'Здесь, могла быть ваша реклама xD',
+	// 	date: new Date()
+	// }
+];
+
 function App() {
   
-	const data = [
-		{
-			title: 'Подготовка к обновлению курсов',
-			text:'Горные походы открывают удивительные природные ландшафт',
-			date: new Date()
-		},
-		{
-			title: 'Реклама',
-			text:'Здесь, могла быть ваша реклама xD',
-			date: new Date()
-		}
-	];
+	const [items, setItems] = useState(INITIAL_DATA);
+
+	const addItem = (item) => {
+		
+		setItems(prevState => [...prevState, {
+			title: item.title,
+			text: item.text,
+			date: new Date(item.date),
+			id: Math.max(...prevState.map(i => i.id)) + 1
+		}]);
+	};
 
 	return (
 		<div className='app'>
 			<LeftPanel>
 				<Header />
 				<JournalAddButton />
-				<JournalList>
-					<CardButton>
-						<JournalItem 
-							title={data[0].title}
-							text={data[0].text}
-							date={data[0].date}
-						/>
-					</CardButton>
-					<CardButton>
-						<JournalItem 
-							title={data[1].title}
-							text={data[1].text}
-							date={data[1].date}
-						/>
-					</CardButton>
-				</JournalList>	
+				<JournalList items={items}/>
 			</LeftPanel>
 
 			<Body>
-				Body
+				<JournalForm newItem={addItem}/>
 			</Body>
 		</div>
 	);
